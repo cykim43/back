@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-deployment-dev
+  namespace: cyk-dev
+spec:
+  selector:
+    matchLabels:
+      type: back
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        type: back
+    spec:
+      containers:
+      - name: container
+        image: cykim43/back_jenkins:latest
+        command: ["/bin/sh", "-ec", "gunicorn config.wsgi --bind 0.0.0.0:8000"]
+        envFrom:
+        - configMapRef:
+            name: back-cm
+        ports:
+        - containerPort: 8000
