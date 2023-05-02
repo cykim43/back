@@ -1,8 +1,7 @@
 FROM python:3.9
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
-COPY . /app
+COPY requirements.txt /app/requirements.txt
+RUN pip3 install -r requirements.txt
 RUN pip3 install gunicorn
-RUN pip3 install -y django
-RUN pip3 install -y django-cors-headers
-RUN pip3 install -y mysqlclient
+COPY . /app
